@@ -516,12 +516,20 @@ if (( NUMARGS == 0 )) || hasArg libcuvs || hasArg tests || hasArg bench-prims ||
 fi
 
 
+CUDA_VERSION="${RAPIDS_CUDA_VERSION:-$(nvcc --version | sed -E -n "s/^.*release ([0-9]+\.[0-9]+).*$/\1/p")}"
+if [[ -z "$CUDA_VERSION" ]]; then
+    echo "Could not determine CUDA version. Please set RAPIDS_CUDA_VERSION or make sure your \$PATH contains a valid nvcc."
+    exit 1
+fi
+
 PYTHON_ARGS_FOR_INSTALL=(
     "-v"
     "--no-build-isolation"
     "--no-deps"
     "--config-settings"
     "rapidsai.disable-cuda=true"
+    "--config-settings"
+    "rapidsai.matrix-entry=cuda=${CUDA_VERSION};cuda_suffixed=false;use_cuda_wheels=false"
 )
 
 # If `RAPIDS_PY_VERSION` is set, use that as the lower-bound for the stable ABI CPython version
