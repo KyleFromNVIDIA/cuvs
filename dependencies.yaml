@@ -46,6 +46,7 @@ files:
       - cuda_version
       - depends_on_cuda_python
       - depends_on_cupy
+      - depends_on_cuvs
       - depends_on_pylibraft
       - depends_on_libcuvs
       - depends_on_librmm
@@ -240,6 +241,7 @@ files:
       table: project
     includes:
       - bench_python
+      - depends_on_cuvs
   py_elastic_cuvs_bench:
     output: pyproject
     pyproject_dir: python/cuvs_bench
@@ -701,17 +703,9 @@ dependencies:
       - output_types: [conda]
         packages:
           - matplotlib-base>=3.9
-          - &cuvs_unsuffixed cuvs==26.12.*,>=0.0.0a0
       - output_types: [requirements, pyproject]
         packages:
           - matplotlib>=3.9
-    specific:
-      - output_types: [pyproject, requirements]
-        matrices:
-          - matrix:
-              cuda_suffixed: "false"
-            packages:
-              - *cuvs_unsuffixed
   bench_elastic:
     common:
       - output_types: [conda, pyproject, requirements]
@@ -744,7 +738,7 @@ dependencies:
     common:
       - output_types: conda
         packages:
-          - *cuvs_unsuffixed
+          - cuvs==26.12.*,>=0.0.0a0
   depends_on_cuvs_bench:
     common:
       - output_types: conda
