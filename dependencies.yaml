@@ -701,7 +701,7 @@ dependencies:
       - output_types: [conda]
         packages:
           - matplotlib-base>=3.9
-          - cuvs==26.12.*
+          - &cuvs_unsuffixed cuvs==26.12.*,>=0.0.0a0
       - output_types: [requirements, pyproject]
         packages:
           - matplotlib>=3.9
@@ -711,7 +711,7 @@ dependencies:
           - matrix:
               cuda_suffixed: "false"
             packages:
-              - cuvs==26.12.*,>=0.0.0a0
+              - *cuvs_unsuffixed
   bench_elastic:
     common:
       - output_types: [conda, pyproject, requirements]
@@ -744,7 +744,7 @@ dependencies:
     common:
       - output_types: conda
         packages:
-          - cuvs==26.12.*,>=0.0.0a0
+          - *cuvs_unsuffixed
   depends_on_cuvs_bench:
     common:
       - output_types: conda
